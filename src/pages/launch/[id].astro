@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { spacexAPI } from "../../lib";
+import type { ILauncher } from "../../interfaces";
+import LaunchDetail from "../../components/LaunchDetail.astro";
+
+export const prerender = false;
+const { id } = Astro.params;
+const { data } = await spacexAPI.get<ILauncher>(`/v5/launches/${id}`);
+---
+
+<Layout title="Launch Info">
+  <LaunchDetail launch={data} />
+</Layout>

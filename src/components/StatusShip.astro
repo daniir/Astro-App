@@ -1,0 +1,50 @@
+---
+interface Props {
+  reused: boolean;
+  recoveryAttempt: boolean;
+  recovered: boolean;
+}
+
+const { reused, recoveryAttempt, recovered } = Astro.props;
+const reusedShip = reused ? "Yes" : "No";
+const recoveryAttemptShip = recoveryAttempt ? "Yes" : "No";
+const recoveredShip = recovered ? "Yes" : "No";
+---
+
+<div class="flex justify-around">
+  <p class="text-white font-bold">
+    Reused: <span
+      class:list={[
+        "text-sm font-semibold rounded-md mx-2 px-2.5 py-0.5",
+        {
+          "bg-green-500 text-green-900": reused,
+          "bg-red-500 text-red-900": !reused,
+        },
+      ]}
+    >
+      {reusedShip}
+    </span>
+  </p>
+  <p class="text-white font-bold">
+    Recovery Attempt: <span
+      class:list={[
+        "text-sm font-semibold rounded-md mx-2 px-2.5 py-0.5",
+        {
+          "bg-green-500 text-green-900": recoveryAttempt,
+          "bg-red-500 text-red-900": !recoveryAttempt,
+        },
+      ]}>{recoveryAttemptShip}</span
+    >
+  </p>
+  <p class="text-white font-bold">
+    Recovered: <span
+      class:list={[
+        "text-sm font-semibold rounded-md mx-2 px-2.5 py-0.5",
+        {
+          "bg-green-500 text-green-900": recovered,
+          "bg-red-500 text-red-900": !recovered,
+        },
+      ]}>{recoveredShip}</span
+    >
+  </p>
+</div>

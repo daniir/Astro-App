@@ -1,0 +1,12 @@
+---
+import LaunchDetail from "../components/LaunchDetail.astro";
+import type { ILauncher } from "../interfaces";
+import Layout from "../layouts/Layout.astro";
+import { spacexAPI } from "../lib";
+
+const { data } = await spacexAPI.get<ILauncher>("/v5/launches/latest");
+---
+
+<Layout title="Último lanzamiento">
+  <LaunchDetail launch={data} />
+</Layout>

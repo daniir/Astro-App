@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LaunchCard from "../components/LaunchCard.astro";
+import { spacexAPI } from "../lib";
+import type { ILauncher } from "../interfaces";
+
+const { data } = await spacexAPI.get<ILauncher[]>("/v5/launches");
+//console.log(data);
+---
+
+<Layout title="SpaceX">
+  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8 mt-8 mx-10">
+    {
+      data.map(({ id, name, links, details, flight_number, success }) => (
+        <LaunchCard
+          id={id}
+          name={name}
+          img={links.patch.small}
+          details={details}
+          flightNumber={flight_number}
+          success={success}
+        />
+      ))
+    }
+  </div>
+</Layout>

@@ -1,0 +1,51 @@
+---
+import { spacexAPI } from "../lib";
+import type { ICrew } from "../interfaces";
+interface Props {
+  crewID: string;
+  role: string;
+}
+
+const { crewID, role } = Astro.props;
+
+const { data } = await spacexAPI.get<ICrew>(`/v4/crew/${crewID}`);
+const isActive = data.status === "active" ? true : false;
+---
+
+<figure
+  class="rounded-xl p-12
+  transition ease-linear duration-300
+  hover:-translate-y-5 hover:bg-gray-600"
+>
+  <img
+    class="w-24 h-24 rounded-full mx-auto"
+    src={data.image}
+    alt={`${role} ${data.name}`}
+    width={395}
+    height={512}
+  />
+  <div class="pt-6 text-center space-y-4 font-mono">
+    <figcaption class="font-medium">
+      <div class="text-sky-500">
+        {data.name}
+      </div>
+      <div class="text-slate-300">
+        {role}
+      </div>
+      <div class="text-slate-400">
+        Agency {data.agency}
+      </div>
+      <div class="text-slate-100 mt-2">
+        <span
+          class:list={[
+            "rounded-full capitalize",
+            {
+              "bg-green-600 py-0.5 px-2.5": isActive,
+              "bg-red-600 py-0.5 px-2.5": !isActive,
+            },
+          ]}>{data.status}</span
+        >
+      </div>
+    </figcaption>
+  </div>
+</figure>
